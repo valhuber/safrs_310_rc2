@@ -13,11 +13,16 @@
 
 ## Existing ALS (optional, for verification)
 
-You can verify this works in existing safrs/ALS.  It should run OptLocking tests (see the readme), and `behave run` tests.  To install, setup the virtual env:
+**Optionally** (not really recommended), you can verify this project in existing safrs/ALS.  It should run the Admin app, and `behave run` tests.  To install, setup the virtual env:
 
 1. [shared venv](https://apilogicserver.github.io/Docs/Project-Env/#shared-venv), or
 
 2. local venv - `python3 -m venv venv; . venv/bin/activate; python3 -m pip install ApiLogicServer`
+
+To run, use the Run Configs - these should both work:
+
+* `No Security`
+* `ApiLogicServer` - [activates security, overview here](https://apilogicserver.github.io/Docs/Security-Overview/).
 
 &nbsp;
 
@@ -35,7 +40,7 @@ The requirements.txt file has been updated with safrs310 dependencies, noted in 
 
 **Note:** one important dependency is `SQLAlchemy 2.0.15`.  This required manual update of the `models.py` to set `cascade_backrefs=False`.  That seemed to be sufficient.  This will require an ALS update (minor).
 
-Besides the new versions, `pyyaml` and `flask_swagger_ui` were surprises.
+Besides the new versions, `pyyaml` and `flask_swagger_ui` were surprises (they were not formerly required - not a problem, just an observation).
 
 4. Get the rc2 safrs
 
