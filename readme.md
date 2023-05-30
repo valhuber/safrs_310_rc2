@@ -38,7 +38,11 @@ rc2 safrs requires the following (caution - still very brittle):
 
 The requirements.txt file has been updated with safrs310 dependencies, noted in comments.
 
-**Note:** one important dependency is `SQLAlchemy 2.0.15`.  This required manual update of the `models.py` to set `cascade_backrefs=False`.  That seemed to be sufficient.  This will require an ALS update (minor).
+**Note:** one important dependency is `SQLAlchemy 2.0.15`.  This required manual update of the `models.py` to set `cascade_backrefs=False`.  
+
+> That *initially* seemed to be sufficient.  In fact, it leads to failure in Behave Tests (Scenario: Good Order,  Step: Logic adjusts aggregates down on delete order - the delete gets a stacktrace on flush), using prior SQLAlchemy.  This **could be quite serious**.
+
+> Perhaps it will not occur in `SQLAlchemy 2.0.15`.  But before this can be researched, the *Fails with Security in DB Bind* (below) needs to be resolved.
 
 Besides the new versions, `pyyaml` and `flask_swagger_ui` were surprises (they were not formerly required - not a problem, just an observation).
 
