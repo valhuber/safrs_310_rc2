@@ -1,4 +1,4 @@
-This is to get the sample ALS app working with safrs 311, currently rc2.
+[This project](https://github.com/valhuber/safrs_310_rc2) is to get the sample ALS app working with safrs 311, currently rc2.
 
 > Suggestion: open this in GitHub using "Project View" (Shift + ".")
 
@@ -17,7 +17,7 @@ You can verify this works in existing safrs/ALS.  It should run OptLocking tests
 
 1. [shared venv](https://apilogicserver.github.io/Docs/Project-Env/#shared-venv), or
 
-2. local venv - python3 -m venv venv; . venv/bin/activate; python3 -m pip install ApiLogicServer
+2. local venv - `python3 -m venv venv; . venv/bin/activate; python3 -m pip install ApiLogicServer`
 
 &nbsp;
 
@@ -51,11 +51,11 @@ Use the existing Run Config, verify app / swagger run.
 
 ### Fails with Security in DB Bind
 
-But, fails when running with security:
+But, fails when running with security (Run Config `ApiLogicServer`), when you attempt to **login as U1/p**:
 
 `sqlalchemy.exc.UnboundExecutionError: Bind key 'authentication' is not in 'SQLALCHEMY_BINDS' config.`
 
-Thomas concurs that binds need recoding.
+Thomas concurs that binds need recoding... from an email:
 
 previously:
 ```python
@@ -72,4 +72,12 @@ session = scoped_session(session_factory)
 
 See [this gist](https://github.com/thomaxxl/safrs-example/blob/414aae69719db4fa544a086ae694f82047ae772e/tests/conftest.py#L69).
 
-To be continued.
+This needs to be applied to [database.bind_databases.py](/database/bind_databases.py).
+
+I blindly added code to `bind_databases#open_databases()`.  But it's **not even called...**
+
+`api_logic_server_run.py` is supposed to call it as shown below.  But breakpoints in `open_databases()` are not hit, and step-into passes right by.  Not a clue why this should be so.
+
+![open_databases not called](./images/open_database%20not%20invoked.png)
+
+Stuck there.

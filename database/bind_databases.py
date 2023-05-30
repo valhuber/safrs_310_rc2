@@ -26,7 +26,28 @@ def open_databases(flask_app, session, safrs_api, method_decorators):
 
         # End Bind URLs
 
-    flask_app.config.update(SQLALCHEMY_BINDS = {
-		'authentication': flask_app.config['SQLALCHEMY_DATABASE_URI_AUTHENTICATION']
-    })  # make multiple databases available to SQLAlchemy
+    safrs_version = "3.1.0"  # or, 3.0.4
+
+    if safrs_version == "3.0.4":
+        flask_app.config.update(SQLALCHEMY_BINDS = {
+            'authentication': flask_app.config['SQLALCHEMY_DATABASE_URI_AUTHENTICATION']
+        })  # make multiple databases available to SQLAlchemy
+    else:
+        app_logger.debug("trying binds for safrs 3.1.0")  # good place for breakpoint, prayers...
+
+        # Start a scoped session (i.e it'll be closed after current application context)
+        from sqlalchemy.orm import scoped_session
+        from sqlalchemy.orm import sessionmaker
+
+        session_factory = sessionmaker(bind=session)  # ??
+        session = scoped_session(session_factory)
+        #session = db.create_scoped_session(options={"bind": connection, "binds": {}})
+
+        # Put our session on the db object for the codebase to use
+        db = safrs_api.DB  # ??
+        db.session = session
+
+        yield session
+
+
     return
