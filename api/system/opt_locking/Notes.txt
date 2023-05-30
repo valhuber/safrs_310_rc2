@@ -1,0 +1,50 @@
+row.property: Order.Id [10643] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.CustomerId [ALFKI] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.EmployeeId [6] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.OrderDate [2013-08-25] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.RequiredDate [2013-09-22] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.ShippedDate [None] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.ShipVia [1] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.Freight [29.4600000000] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.ShipName [Alfreds Futterkiste] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.ShipAddress [Obere Str. 57] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.ShipCity [Berlin] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.ShipRegion [Western Europe] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.ShipZip [12209] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.ShipCountry [Germany] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.AmountTotal [1086.00] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.Country [None] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.City [None] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.Ready [True] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.OrderDetailCount [3] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Order.CloneFromOrder [None] <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+
+checksum_row (get) [6871253564541766803], inspector: <sqlalchemy.orm.state.InstanceState object at 0x104707e90>
+checksum_value: 6871253564541766803
+
+Logic Phase:		BEFORE COMMIT(session=0x10473bd90)          						
+Logic Phase:		ROW LOGIC(session=0x10473bd90) (sqlalchemy before_flush)			
+..Order[10643] {Update - client} ShipZip: 12209, Id: 10643, CustomerId: ALFKI, EmployeeId: 6, OrderDate: 2013-08-25, RequiredDate:  [2013-09-22-->] 2013-10-13 00:00:00, ShippedDate: None, ShipVia: 1, Freight: 29.4600000000, ShipName: Alfreds Futterkiste, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipRegion: Western Europe, ShipCountry: Germany, AmountTotal: 1086.00, Country: None, City: None, Ready: True, OrderDetailCount: 3, CloneFromOrder: None  row: 0x104739a90  session: 0x10473bd90  ins_upd_dlt: upd
+Opt Lock Patch
+old_row.property: Id [10643] <<class 'str'>>
+old_row.property: CustomerId [ALFKI] <<class 'str'>>
+old_row.property: EmployeeId [6] <<class 'str'>>
+old_row.property: OrderDate [2013-08-25] <<class 'str'>>
+old_row.property: RequiredDate [2013-09-22] <<class 'str'>>
+old_row.property: ShippedDate [None] <<class 'str'>>
+old_row.property: ShipVia [1] <<class 'str'>>
+old_row.property: Freight [29.4600000000] <<class 'str'>>
+old_row.property: ShipName [Alfreds Futterkiste] <<class 'str'>>
+old_row.property: ShipAddress [Obere Str. 57] <<class 'str'>>
+old_row.property: ShipCity [Berlin] <<class 'str'>>
+old_row.property: ShipRegion [Western Europe] <<class 'str'>>
+old_row.property: ShipZip [12209] <<class 'str'>>
+old_row.property: ShipCountry [Germany] <<class 'str'>>
+old_row.property: AmountTotal [1086.00] <<class 'str'>>
+old_row.property: Country [None] <<class 'str'>>
+old_row.property: City [None] <<class 'str'>>
+old_row.property: Ready [True] <<class 'str'>>
+old_row.property: OrderDetailCount [3] <<class 'str'>>
+old_row.property: CloneFromOrder [None] <<class 'str'>>
+
+checksum_old_row [-5169037012034953639]
