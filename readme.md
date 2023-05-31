@@ -1,5 +1,11 @@
 [This project](https://github.com/valhuber/safrs_310_rc2) is to get the sample ALS app working with safrs 311, currently rc2.
 
+Status:
+* Basic no-security runs
+* Known Issues (evidently due to SQLAlchemy 2.0.15) - details below...
+    * Fails with Security in DB Bind
+    * Delete gets a stacktrace on flush
+
 > Suggestion: open this in GitHub using "Project View" (Shift + ".")
 
 &nbsp;
@@ -40,7 +46,7 @@ The requirements.txt file has been updated with safrs310 dependencies, noted in 
 
 **Note:** one important dependency is `SQLAlchemy 2.0.15`.  This required manual update of the `models.py` to set `cascade_backrefs=False`.  
 
-> That *initially* seemed to be sufficient.  In fact, it leads to failure in Behave Tests (Scenario: Good Order,  Step: Logic adjusts aggregates down on delete order - the delete gets a stacktrace on flush), using prior SQLAlchemy.  This **could be quite serious**.
+> That *initially* seemed to be sufficient.  In fact, it leads to failure in Behave Tests (Scenario: Good Order,  Step: Logic adjusts aggregates down on delete order - the **delete gets a stacktrace on flush**), using prior SQLAlchemy.  This **could be quite serious**.
 
 > Perhaps it will not occur in `SQLAlchemy 2.0.15`.  But before this can be researched, the *Fails with Security in DB Bind* (below) needs to be resolved.
 
