@@ -1,4 +1,4 @@
-[This project](https://github.com/valhuber/safrs_310_rc2) is to get the sample ALS app working with safrs 311, currently rc2.
+[This project](https://github.com/valhuber/safrs_310_rc2) is to get the sample ALS app working with safrs 3.1.0.
 
 Status:
 * Basic no-security runs
@@ -14,11 +14,11 @@ Status:
 ---
 &nbsp;
 
-# Installation safrs==3.1.0rc2 (WIP)
+# Installation safrs==3.1.0 (WIP)
 
 This project runs properly under the *old* safrs/flask/SQLAlchemy.  You can verify this as described in the Appendix: Project Executes with old safrs/flask/SQLAlchemy.
 
-rc2 safrs, however, requires the following (caution - still very brittle):
+3.1.0 safrs, however, requires the following (caution - still very brittle):
 
 **1. Create a local venv:** `python3 -m venv venv; . venv/bin/activate`
 
@@ -32,7 +32,9 @@ The requirements.txt file has been updated with safrs310 dependencies, noted in 
 
 * Besides the new versions, `pyyaml` and `flask_swagger_ui` were surprises (they were not formerly required - not a problem, just an observation).
 
-**4. Get the rc2 safrs**
+**4. Get the latest safrs**: `pip install safrs==3.1.0'
+
+Or, use testpy:
 
 `python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple  safrs==3.1.0rc2`
 
