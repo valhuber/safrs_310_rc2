@@ -310,7 +310,7 @@ def create_app(swagger_host: str = "localhost", swagger_port: str = "5656"):
             safrs_init_logger = logging.getLogger("safrs.safrs_init")
             safrs_init_logger.setLevel(logging.WARN)
         flask_app.config.from_object("config.Config")
-        flask_app.config.update(SQLALCHEMY_BINDS = {
+        flask_app.config.update(SQLALCHEMY_BINDS = {  # tp-change
             'authentication': flask_app.config['SQLALCHEMY_DATABASE_URI_AUTHENTICATION']
         }) 
 
