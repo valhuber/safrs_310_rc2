@@ -21,7 +21,8 @@ def open_databases(flask_app, session, safrs_api, method_decorators):
         + f'\n -- len(database.authentication_models.authentication.metadata.tables) tables loaded')
     
     authentication_expose_api_models.expose_models(safrs_api, method_decorators= method_decorators)
-
-    flask_app.config.update(SQLALCHEMY_BINDS = {
-        'authentication': flask_app.config['SQLALCHEMY_DATABASE_URI_AUTHENTICATION']
-    })  # make multiple databases available to SQLAlchemy
+    rebind = False  # vh-change - skip since already done (seems to work)
+    if rebind:
+        flask_app.config.update(SQLALCHEMY_BINDS = {
+            'authentication': flask_app.config['SQLALCHEMY_DATABASE_URI_AUTHENTICATION']
+        })  # make multiple databases available to SQLAlchemy
