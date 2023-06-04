@@ -19,7 +19,7 @@
         {
             "name": "ApiLogicServer",
             "type": "python",
-            "env": {"PYTHONPATH": "/Users/val/dev/safrs", "PYTHONHASHSEED": "0", "APILOGICPROJECT_DEBUG": "False"},
+            "env": {"PYTHONPATH": "/Users/val/dev/safrs", "PYTHONHASHSEED": "0", "APILOGICPROJECT_DEBUG": "TRUE"},
             "request": "launch",
             "program": "api_logic_server_run.py",
             "redirectOutput": true,
