@@ -3,7 +3,7 @@
 """
 ==============================================================================
 
-    This file initializes and starts the API Logic Server (v 08.04.06, May 23, 2023 21:59:19):
+    This file initializes and starts the API Logic Server (v 08.04.15, June 05, 2023 15:38:36):
         $ python3 api_logic_server_run.py [--help]
 
     Then, access the Admin App and API via the Browser, eg:  
@@ -69,7 +69,6 @@ import util as util
 logic_logger_activate_debug = False
 """ True prints all rules on startup """
 
-util.sys_info()
 
 
 # ==================================
@@ -80,7 +79,7 @@ current_path = os.path.abspath(os.path.dirname(__file__))
 with open(f'{current_path}/logging.yml','rt') as f:  # see also logic/declare_logic.py
         config=yaml.safe_load(f.read())
         f.close()
-logging.config.dictConfig(config)  # log levels: critical < error < warning(20) < info(30) < debug
+logging.config.dictConfig(config)  # log levels: notset 0, debug 10, info 20, warn 30, error 40, critical 50
 app_logger = logging.getLogger("api_logic_server_app")
 debug_value = os.getenv('APILOGICPROJECT_DEBUG')
 if debug_value is not None:  # > export APILOGICPROJECT_DEBUG=True
@@ -101,7 +100,7 @@ for each_arg in sys.argv:
         args += ", "
 project_name = os.path.basename(os.path.normpath(current_path))
 app_logger.info(f'\nAPI Logic Project ({project_name}) Starting with args: \n.. {args}\n')
-app_logger.info(f'Created May 23, 2023 21:59:19 at {str(current_path)}\n')
+app_logger.info(f'Created June 05, 2023 15:38:36 at {str(current_path)}\n')
 
 from typing import TypedDict
 import safrs  # fails without venv - see https://apilogicserver.github.io/Docs/Project-Env/
@@ -117,8 +116,7 @@ from safrs import ValidationError, SAFRSBase, SAFRSAPI
 from config import Config
 from ui.admin.admin_loader import admin_events
 from security.system.authentication import configure_auth
-from database.bind_databases import open_databases
-from database.bind_databases import bind_each_db
+import database.multi_db as multi_db
 
 
 def setup_logging(flask_app):
@@ -287,7 +285,9 @@ def get_args():
 
 
 # ==========================================================
-# Creates flask_app, Opens Database, Activates API and Logic 
+# Creates flask_app, starts server after setup:
+#   - Opens Database(s)
+#   - Setup API, Logic, Security, Optimistic Locking 
 # ==========================================================
 
 def create_app(swagger_host: str = "localhost", swagger_port: str = "5656"):
@@ -300,7 +300,6 @@ def create_app(swagger_host: str = "localhost", swagger_port: str = "5656"):
     with warnings.catch_warnings():
 
         flask_app = Flask("API Logic Server", template_folder='ui/templates')  # templates to load ui/admin/admin.yaml
-        
 
         setup_logging(flask_app)        
         safrs_log_level = safrs.log.getEffectiveLevel()
@@ -308,13 +307,13 @@ def create_app(swagger_host: str = "localhost", swagger_port: str = "5656"):
         db_log_level = db_logger.getEffectiveLevel()
         do_hide_chatty_logging = True
         if do_hide_chatty_logging and app_logger.getEffectiveLevel() <= logging.INFO:
-            safrs.log.setLevel(logging.WARN)  # debug is 10, warn is 20, info 30
+            safrs.log.setLevel(logging.WARN)  # notset 0, debug 10, info 20, warn 30, error 40, critical 50
             db_logger.setLevel(logging.WARN)
             safrs_init_logger = logging.getLogger("safrs.safrs_init")
             safrs_init_logger.setLevel(logging.WARN)
         flask_app.config.from_object("config.Config")
 
-        bind_each_db(flask_app)
+        multi_db.bind_dbs(flask_app)
 
         # https://stackoverflow.com/questions/34674029/sqlalchemy-query-raises-unnecessary-warning-about-sqlite-and-decimal-how-to-spe
         warnings.simplefilter("ignore", category=sa_exc.SAWarning)  # alert - disable for safety msgs
@@ -375,7 +374,7 @@ def create_app(swagger_host: str = "localhost", swagger_port: str = "5656"):
             if Config.SECURITY_ENABLED:
                 configure_auth(flask_app, database, method_decorators)
 
-            open_databases(flask_app, session, safrs_api, method_decorators)
+            multi_db.expose_db_apis(flask_app, session, safrs_api, method_decorators)
 
             if Config.SECURITY_ENABLED:
                 from security import declare_security  # activate security
@@ -409,7 +408,7 @@ if os.getenv('VERBOSE'):
 
 if verbose:
     app_logger.setLevel(logging.DEBUG)
-    safrs.log.setLevel(logging.DEBUG)  # debug is 10, warn is 20, info 30
+    safrs.log.setLevel(logging.DEBUG)  # notset 0, debug 10, info 20, warn 30, error 40, critical 50
 if app_logger.getEffectiveLevel() == logging.DEBUG:
     util.sys_info()
 
@@ -419,7 +418,7 @@ admin_events(flask_app = flask_app, swagger_host = swagger_host, swagger_port = 
     API_PREFIX=API_PREFIX, validation_error=ValidationError, http_type = http_type)
 
 if __name__ == "__main__":
-    msg = f'API Logic Project loaded (not WSGI), version 08.04.06\n'
+    msg = f'API Logic Project loaded (not WSGI), version 08.04.15\n'
     if is_docker():
         msg += f' (running from docker container at flask_host: {flask_host} - may require refresh)\n'
     else:
@@ -439,7 +438,7 @@ if __name__ == "__main__":
 
     flask_app.run(host=flask_host, threaded=True, port=port)
 else:
-    msg = f'API Logic Project Loaded (WSGI), version 08.04.06\n'
+    msg = f'API Logic Project Loaded (WSGI), version 08.04.15\n'
     if is_docker():
         msg += f' (running from docker container at {flask_host} - may require refresh)\n'
     else:
