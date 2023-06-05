@@ -3,8 +3,19 @@ import logging as logging
 
 app_logger = logging.getLogger("api_logic_server_app")
 
+early_bind = True
+""" tp-fix by doing bind early - late binds fail """
+
 # use absolute path import for easier multi-{app,model,db} support
 #database = __import__('database')  # tp-change
+
+
+def bind_each_db(flask_app):
+    if early_bind:
+        flask_app.config.update(SQLALCHEMY_BINDS = {
+            'authentication': flask_app.config['SQLALCHEMY_DATABASE_URI_AUTHENTICATION']
+        })  # make multiple databases available to SQLAlchemy
+
 
 def open_databases(flask_app, session, safrs_api, method_decorators):
     """ called by api_logic_server_run to open each additional database, and expose APIs """
@@ -21,8 +32,7 @@ def open_databases(flask_app, session, safrs_api, method_decorators):
         + f'\n -- len(database.authentication_models.authentication.metadata.tables) tables loaded')
     
     authentication_expose_api_models.expose_models(safrs_api, method_decorators= method_decorators)
-    rebind = False  # vh-change - skip since already done (seems to work)
-    if rebind:
+    if not early_bind:  # vh-change - binds only work early
         flask_app.config.update(SQLALCHEMY_BINDS = {
             'authentication': flask_app.config['SQLALCHEMY_DATABASE_URI_AUTHENTICATION']
         })  # make multiple databases available to SQLAlchemy

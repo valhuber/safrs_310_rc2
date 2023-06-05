@@ -1,27 +1,27 @@
 
-Logic Phase:		BEFORE COMMIT(session=0x105afb790)          						 - 2023-05-31 19:38:40,406 - logic_logger - DEBUG
-Logic Phase:		ROW LOGIC(session=0x105afb790) (sqlalchemy before_flush)			 - 2023-05-31 19:38:40,406 - logic_logger - INFO
-..Order[10643] {Update - client} Id: 10643, CustomerId: ALFKI, EmployeeId: 6, OrderDate: 2013-08-25, RequiredDate:  [2013-09-22-->] 2013-10-13 00:00:00, ShippedDate: None, ShipVia: 1, Freight: 29.4600000000, ShipName: Alfreds Futterkiste, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipRegion: Western Europe, ShipZip: 12209, ShipCountry: Germany, AmountTotal: 1086.00, Country: None, City: None, Ready: True, OrderDetailCount: 3, CloneFromOrder: None  row: 0x105afad50  session: 0x105afb790  ins_upd_dlt: upd - 2023-05-31 19:38:40,406 - logic_logger - INFO
-Logic Phase:		COMMIT(session=0x105afb790)   										 - 2023-05-31 19:38:40,407 - logic_logger - INFO
-..Order[10643] {Commit Event} Id: 10643, CustomerId: ALFKI, EmployeeId: 6, OrderDate: 2013-08-25, RequiredDate:  [2013-09-22-->] 2013-10-13 00:00:00, ShippedDate: None, ShipVia: 1, Freight: 29.4600000000, ShipName: Alfreds Futterkiste, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipRegion: Western Europe, ShipZip: 12209, ShipCountry: Germany, AmountTotal: 1086.00, Country: None, City: None, Ready: True, OrderDetailCount: 3, CloneFromOrder: None  row: 0x105afad50  session: 0x105afb790  ins_upd_dlt: upd - 2023-05-31 19:38:40,408 - logic_logger - INFO
+Logic Phase:		BEFORE COMMIT(session=0x106777090)          						 - 2023-06-04 16:58:48,941 - logic_logger - DEBUG
+Logic Phase:		ROW LOGIC(session=0x106777090) (sqlalchemy before_flush)			 - 2023-06-04 16:58:48,941 - logic_logger - INFO
+..Order[10643] {Update - client} Id: 10643, CustomerId: ALFKI, EmployeeId: 6, OrderDate: 2013-08-25, RequiredDate:  [2013-10-13-->] 2013-10-13 00:00:00, ShippedDate: None, ShipVia: 1, Freight: 29.4600000000, ShipName: Alfreds Futterkiste, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipRegion: Western Europe, ShipZip: 12209, ShipCountry: Germany, AmountTotal: 1086.00, Country: None, City: None, Ready: True, OrderDetailCount: 3, CloneFromOrder: None  row: 0x107f88490  session: 0x106777090  ins_upd_dlt: upd - 2023-06-04 16:58:48,941 - logic_logger - INFO
+Logic Phase:		COMMIT(session=0x106777090)   										 - 2023-06-04 16:58:48,942 - logic_logger - INFO
+..Order[10643] {Commit Event} Id: 10643, CustomerId: ALFKI, EmployeeId: 6, OrderDate: 2013-08-25, RequiredDate:  [2013-10-13-->] 2013-10-13 00:00:00, ShippedDate: None, ShipVia: 1, Freight: 29.4600000000, ShipName: Alfreds Futterkiste, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipRegion: Western Europe, ShipZip: 12209, ShipCountry: Germany, AmountTotal: 1086.00, Country: None, City: None, Ready: True, OrderDetailCount: 3, CloneFromOrder: None  row: 0x107f88490  session: 0x106777090  ins_upd_dlt: upd - 2023-06-04 16:58:48,943 - logic_logger - INFO
 
-Rules Fired:		## - 2023-05-31 19:38:40,408 - logic_logger - INFO
-  Customer		## - 2023-05-31 19:38:40,408 - logic_logger - INFO
-    1. Derive Customer.Balance as Sum(Order.AmountTotal Where <function declare_logic.<locals>.<lambda> at 0x104c374c0>)		## - 2023-05-31 19:38:40,408 - logic_logger - INFO
-    2. Derive Customer.UnpaidOrderCount as Count(<class 'database.models.Order'> Where <function declare_logic.<locals>.<lambda> at 0x104d6dd00>)		## - 2023-05-31 19:38:40,408 - logic_logger - INFO
-    3. Derive Customer.OrderCount as Count(<class 'database.models.Order'> Where None)		## - 2023-05-31 19:38:40,408 - logic_logger - INFO
-  Order		## - 2023-05-31 19:38:40,408 - logic_logger - INFO
-    4. RowEvent Order.congratulate_sales_rep() 		## - 2023-05-31 19:38:40,408 - logic_logger - INFO
-    5. RowEvent Order.order_defaults() 		## - 2023-05-31 19:38:40,408 - logic_logger - INFO
-    6. RowEvent Order.clone_order() 		## - 2023-05-31 19:38:40,408 - logic_logger - INFO
+Rules Fired:		## - 2023-06-04 16:58:48,943 - logic_logger - INFO
+  Customer		## - 2023-06-04 16:58:48,943 - logic_logger - INFO
+    1. Derive Customer.UnpaidOrderCount as Count(<class 'database.models.Order'> Where <function declare_logic.<locals>.<lambda> at 0x105fbd440>)		## - 2023-06-04 16:58:48,943 - logic_logger - INFO
+    2. Derive Customer.Balance as Sum(Order.AmountTotal Where <function declare_logic.<locals>.<lambda> at 0x105e86c00>)		## - 2023-06-04 16:58:48,943 - logic_logger - INFO
+    3. Derive Customer.OrderCount as Count(<class 'database.models.Order'> Where None)		## - 2023-06-04 16:58:48,943 - logic_logger - INFO
+  Order		## - 2023-06-04 16:58:48,943 - logic_logger - INFO
+    4. RowEvent Order.order_defaults() 		## - 2023-06-04 16:58:48,943 - logic_logger - INFO
+    5. RowEvent Order.clone_order() 		## - 2023-06-04 16:58:48,943 - logic_logger - INFO
+    6. RowEvent Order.congratulate_sales_rep() 		## - 2023-06-04 16:58:48,943 - logic_logger - INFO
 
- - 2023-05-31 19:38:40,408 - logic_logger - INFO
-Logic Phase:		FLUSH(session=0x105afb790)   (sqlalchemy flush processing)       	 - 2023-05-31 19:38:40,408 - logic_logger - INFO
+ - 2023-06-04 16:58:48,943 - logic_logger - INFO
+Logic Phase:		FLUSH(session=0x106777090)   (sqlalchemy flush processing)       	 - 2023-06-04 16:58:48,943 - logic_logger - INFO
 
-Logic Phase:		BEFORE COMMIT(session=0x105afb790)          						 - 2023-05-31 19:38:40,414 - logic_logger - DEBUG
+Logic Phase:		BEFORE COMMIT(session=0x106777090)          						 - 2023-06-04 16:58:48,948 - logic_logger - DEBUG
 
-Logic Phase:		BEFORE COMMIT(session=0x105afb790)          						 - 2023-05-31 19:38:40,414 - logic_logger - DEBUG
+Logic Phase:		BEFORE COMMIT(session=0x106777090)          						 - 2023-06-04 16:58:48,948 - logic_logger - DEBUG
 
-Logic Phase:		BEFORE COMMIT(session=0x105afb150)          						 - 2023-05-31 19:38:40,438 - logic_logger - DEBUG
+Logic Phase:		BEFORE COMMIT(session=0x10679c450)          						 - 2023-06-04 16:58:48,982 - logic_logger - DEBUG
 
-Logic Phase:		BEFORE COMMIT(session=0x105afb4d0)          						 - 2023-05-31 19:38:40,471 - logic_logger - DEBUG
+Logic Phase:		BEFORE COMMIT(session=0x10679c510)          						 - 2023-06-04 16:58:49,025 - logic_logger - DEBUG

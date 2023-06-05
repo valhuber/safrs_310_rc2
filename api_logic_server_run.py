@@ -117,6 +117,9 @@ from safrs import ValidationError, SAFRSBase, SAFRSAPI
 from config import Config
 from ui.admin.admin_loader import admin_events
 from security.system.authentication import configure_auth
+from database.bind_databases import open_databases
+from database.bind_databases import bind_each_db
+
 
 def setup_logging(flask_app):
     setup_logic_logger = False
@@ -310,9 +313,8 @@ def create_app(swagger_host: str = "localhost", swagger_port: str = "5656"):
             safrs_init_logger = logging.getLogger("safrs.safrs_init")
             safrs_init_logger.setLevel(logging.WARN)
         flask_app.config.from_object("config.Config")
-        flask_app.config.update(SQLALCHEMY_BINDS = {  # tp-change
-            'authentication': flask_app.config['SQLALCHEMY_DATABASE_URI_AUTHENTICATION']
-        }) 
+
+        bind_each_db(flask_app)
 
         # https://stackoverflow.com/questions/34674029/sqlalchemy-query-raises-unnecessary-warning-about-sqlite-and-decimal-how-to-spe
         warnings.simplefilter("ignore", category=sa_exc.SAWarning)  # alert - disable for safety msgs
@@ -373,7 +375,6 @@ def create_app(swagger_host: str = "localhost", swagger_port: str = "5656"):
             if Config.SECURITY_ENABLED:
                 configure_auth(flask_app, database, method_decorators)
 
-            from database.bind_databases import open_databases
             open_databases(flask_app, session, safrs_api, method_decorators)
 
             if Config.SECURITY_ENABLED:

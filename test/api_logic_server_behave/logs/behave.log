@@ -75,4 +75,4 @@ Feature: Salary Change # features/salary_change.feature:1
     Then Reject - Raise too small            # features/steps/salary_change.py:100
 
 &nbsp;&nbsp;
-Completed at May 31, 2023 19:38:40
+Completed at June 04, 2023 16:58:49
